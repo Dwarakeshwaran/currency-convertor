@@ -1,4 +1,4 @@
-package config;
+package managecurrency.config.db;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -8,6 +8,8 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import managecurrency.config.app.ManageCurrencyConfiguration;
+
 public class ManageCurrencyInitializer implements WebApplicationInitializer {
 
 	@Override
@@ -16,7 +18,7 @@ public class ManageCurrencyInitializer implements WebApplicationInitializer {
 		System.out.println("Inside Initialiser");
 
 		AnnotationConfigWebApplicationContext container = new AnnotationConfigWebApplicationContext();
-		container.register(ManageCurrencyConfigiration.class);
+		container.register(ManageCurrencyConfiguration.class);
 
 		DispatcherServlet servlet = new DispatcherServlet(container);
 		ServletRegistration.Dynamic customServlet = servletContext.addServlet("manageCurrencyServlet", servlet);
