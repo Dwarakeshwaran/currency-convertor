@@ -31,7 +31,7 @@ public class ManageCurrencyService {
 
 		System.out.println("Currency: " + currency);
 
-		if (currency == null)
+		if (currency != null)
 			return true;
 		else
 			return false;
@@ -42,6 +42,18 @@ public class ManageCurrencyService {
 		Session session = factory.getCurrentSession();
 
 		session.update(currency);
+
+	}
+
+	public Double getConversionFactor(Currency currency) {
+
+		Double conversionFactor = null;
+		Session session = factory.getCurrentSession();
+
+		if (checkCurrencyCodeAvailability(currency.getCountryCode()))
+			conversionFactor = session.get(Currency.class, currency.getCountryCode()).getConversionFactor();
+
+		return conversionFactor;
 
 	}
 

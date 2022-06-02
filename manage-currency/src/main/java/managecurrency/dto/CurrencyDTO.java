@@ -10,8 +10,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class CurrencyDTO {
-	
+
 	private String countryCode;
 	private Double conversionFactor;
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode.toUpperCase();
+	}
 
 }
