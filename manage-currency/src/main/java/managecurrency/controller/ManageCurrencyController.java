@@ -1,12 +1,17 @@
 package managecurrency.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import managecurrency.model.Currency;
+import managecurrency.dto.CurrencyDTO;
+import managecurrency.entity.Currency;
 import managecurrency.service.ManageCurrencyService;
 
 @Controller
@@ -15,17 +20,20 @@ public class ManageCurrencyController {
 	@Autowired
 	private ManageCurrencyService service;
 
-	@RequestMapping(method = RequestMethod.POST, path = "/saveDetails")
-	@ResponseBody
-	public String saveDetails() {
+	@Autowired
+	private ModelMapper mapper;
 
-		Currency currency = new Currency();
-		currency.setCountryCode("JPY");
-		currency.setConversionFactor(15L);
+	@RequestMapping(method = RequestMethod.POST, value = "/saveDetails", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> saveCurrencyDetails(@RequestBody CurrencyDTO currencyDto) {
 
-		service.saveDetails(currency);
+		Currency currency = mapper.map(currencyDto, Currency.class);
+		
+		if(service.checkCurrencyCodeAvailability(currency.getCountryCode()))
+			service.saveCurrencyDetails(currency);
+		else
+			service.updateCurrencyDetails(currency);
 
-		return "Added";
+		return new ResponseEntity<String>(currencyDto + " Loaded to DB", HttpStatus.OK);
 
 	}
 

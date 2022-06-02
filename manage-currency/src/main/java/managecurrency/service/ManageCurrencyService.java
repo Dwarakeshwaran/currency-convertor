@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import managecurrency.model.Currency;
+import managecurrency.entity.Currency;
 
 @Service
 @Transactional
@@ -15,11 +15,33 @@ public class ManageCurrencyService {
 	@Autowired
 	private SessionFactory factory;
 
-	public void saveDetails(Currency currency) {
+	public void saveCurrencyDetails(Currency currency) {
 
 		Session session = factory.getCurrentSession();
 
 		session.save(currency);
+
+	}
+
+	public boolean checkCurrencyCodeAvailability(String currencyCode) {
+
+		Session session = factory.getCurrentSession();
+
+		Currency currency = session.get(Currency.class, currencyCode);
+
+		System.out.println("Currency: " + currency);
+
+		if (currency == null)
+			return true;
+		else
+			return false;
+	}
+
+	public void updateCurrencyDetails(Currency currency) {
+
+		Session session = factory.getCurrentSession();
+
+		session.update(currency);
 
 	}
 

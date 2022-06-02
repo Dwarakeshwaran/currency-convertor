@@ -1,4 +1,4 @@
-package managecurrency.config.app;
+package managecurrency.config.db;
 
 import java.util.Properties;
 
@@ -10,7 +10,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import managecurrency.model.Currency;
+import managecurrency.entity.Currency;
 
 @Configuration
 @EnableTransactionManagement

@@ -1,4 +1,4 @@
-package managecurrency.dao;
+package managecurrency.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +9,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CurrencyDAO {
+public class CurrencyDTO {
 	
 	private String countryCode;
-	private int conversionFactor;
+	private Double conversionFactor;
 
 }
