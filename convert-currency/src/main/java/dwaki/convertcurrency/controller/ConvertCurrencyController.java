@@ -38,4 +38,22 @@ public class ConvertCurrencyController {
 
 	}
 
+	@RequestMapping(method = RequestMethod.POST, value = "inverseConversion", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> inverseConversion(@RequestBody Map<String, String> conversionDetails) {
+
+		String countryCode = conversionDetails.get("countryCode");
+		Double amount = Double.parseDouble(conversionDetails.get("amount"));
+		Double conversionInvertedAmount = null;
+
+		System.out.println("Country Code: " + countryCode + " Conversion Amount: " + amount);
+
+		if (service.checkCurrencyCodeAvailability(countryCode)) {
+			conversionInvertedAmount = service.inverseConversion(countryCode, amount);
+			return new ResponseEntity<String>(conversionInvertedAmount.toString(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(countryCode + " Does Not Exists", HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
 }

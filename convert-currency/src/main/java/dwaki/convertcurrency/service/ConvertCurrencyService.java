@@ -38,7 +38,7 @@ public class ConvertCurrencyService {
 	public Double convertAmount(String countryCode, Double amount) {
 
 		Double convertedAmount = null;
-		Double conversionFactory = null;
+		Double conversionFactor = null;
 
 		Session session = factory.getCurrentSession();
 
@@ -47,14 +47,36 @@ public class ConvertCurrencyService {
 			Currency currency = session.get(Currency.class, countryCode);
 			CurrencyDTO currencyDto = mapper.map(currency, CurrencyDTO.class);
 
-			conversionFactory = currencyDto.getConversionFactor();
-			convertedAmount = 1 / conversionFactory;
+			conversionFactor = currencyDto.getConversionFactor();
+			convertedAmount = amount / conversionFactor;
 
 		} catch (Exception exception) {
 			System.out.println("Exception occurred while converting the amount " + exception);
 		}
 
 		return convertedAmount;
+	}
+	
+	public Double inverseConversion(String countryCode, Double amount) {
+
+		Double conversionInvertedAmount = null;
+		Double conversionFactor = null;
+
+		Session session = factory.getCurrentSession();
+
+		try {
+
+			Currency currency = session.get(Currency.class, countryCode);
+			CurrencyDTO currencyDto = mapper.map(currency, CurrencyDTO.class);
+
+			conversionFactor = currencyDto.getConversionFactor();
+			conversionInvertedAmount = amount * conversionFactor;
+
+		} catch (Exception exception) {
+			System.out.println("Exception occurred while converting the amount " + exception);
+		}
+
+		return conversionInvertedAmount;
 	}
 
 }
