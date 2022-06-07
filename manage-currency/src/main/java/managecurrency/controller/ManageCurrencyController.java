@@ -16,6 +16,7 @@ import managecurrency.service.ManageCurrencyService;
 
 @Controller
 @RequestMapping("api")
+
 public class ManageCurrencyController {
 
 	@Autowired
